@@ -16,7 +16,7 @@ Eine detaillierte Anleitung zum Eigenbau und Anwendung einer Bienenstockwaage be
   * POE support über RJ45 Anschluss
   * USB Port für ein Photovoltaik Modul (inkl. 5V Regler)
 
-findet sich in dem File **[BeeLogDoc_v1.3.md](https://github.com/mchresse/BeeLog/blob/BeeLogDoc_v1.3.md)**.
+findet sich in dem File **[BeeLogDoc_v1.3.md](https://github.com/mchresse/BeeLog/blob/master/BeeLogDoc_v1.3.md)**.
 
 ## Features:
 - Alle Sensordaten werden alle 10 Minuten via FTP versendet
