@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>beelog/adslib.h</itemPath>
+      <itemPath>beelog/beehive.h</itemPath>
+      <itemPath>beelog/beelog.h</itemPath>
+      <itemPath>beelog/curlftp.h</itemPath>
+      <itemPath>beelog/epaper/epd2in7.h</itemPath>
+      <itemPath>beelog/epaper/epdif.h</itemPath>
+      <itemPath>beelog/epaper/epdpaint.h</itemPath>
+      <itemPath>beelog/epdwrapper.h</itemPath>
+      <itemPath>beelog/epaper/fonts.h</itemPath>
+      <itemPath>beelog/get1wire.h</itemPath>
+      <itemPath>beelog/getini.h</itemPath>
+      <itemPath>beelog/hx711.h</itemPath>
+      <itemPath>beelog/ini.h</itemPath>
+      <itemPath>beelog/isr.h</itemPath>
+      <itemPath>beelog/raspimon.h</itemPath>
+      <itemPath>beelog/readadc.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="epd" projectFiles="true">
+        <itemPath>beelog/epaper/WhiteFrame.c</itemPath>
+        <itemPath>beelog/epaper/epd2in7.cpp</itemPath>
+        <itemPath>beelog/epaper/epdif.cpp</itemPath>
+        <itemPath>beelog/epaper/epdpaint.cpp</itemPath>
+        <itemPath>beelog/epdwrapper.cpp</itemPath>
+        <itemPath>beelog/epaper/font12.c</itemPath>
+        <itemPath>beelog/epaper/font16.c</itemPath>
+        <itemPath>beelog/epaper/font20.c</itemPath>
+        <itemPath>beelog/epaper/font24.c</itemPath>
+        <itemPath>beelog/epaper/font8.c</itemPath>
+      </logicalFolder>
+      <itemPath>beelog/beelog.c</itemPath>
+      <itemPath>beelog/bhdata.c</itemPath>
+      <itemPath>beelog/config.tpl</itemPath>
+      <itemPath>beelog/curlftp.c</itemPath>
+      <itemPath>beelog/get1wire.c</itemPath>
+      <itemPath>beelog/getini.c</itemPath>
+      <itemPath>beelog/getip.c</itemPath>
+      <itemPath>beelog/hx711.c</itemPath>
+      <itemPath>beelog/ini.c</itemPath>
+      <itemPath>beelog/isr.c</itemPath>
+      <itemPath>beelog/main.c</itemPath>
+      <itemPath>beelog/raspimon.c</itemPath>
+      <itemPath>beelog/readadc.c</itemPath>
+      <itemPath>beelog/readads.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>beelog</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-L/usr/lib/arm-linux-gnueabihf  -lcurl -lwiringPi</linkerOptionItem>
+            <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="beelog/adslib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/beehive.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/beelog.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/beelog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/bhdata.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/config.tpl" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/curlftp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/curlftp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/WhiteFrame.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epd2in7.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epd2in7.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdif.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdif.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdpaint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdpaint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font12.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font16.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font20.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font24.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font8.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/fonts.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epdwrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epdwrapper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/get1wire.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/get1wire.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/getini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/getini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/getip.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/hx711.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/hx711.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/isr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/isr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/raspimon.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/raspimon.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/readadc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/readadc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/readads.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="beelog/adslib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/beehive.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/beelog.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/beelog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/bhdata.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/config.tpl" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/curlftp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/curlftp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/WhiteFrame.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epd2in7.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epd2in7.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdif.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdif.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdpaint.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epaper/epdpaint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font12.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font16.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font20.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font24.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font8.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/fonts.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epdwrapper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="beelog/epdwrapper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/get1wire.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/get1wire.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/getini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/getini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/getip.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/hx711.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/hx711.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/isr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/isr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/raspimon.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/raspimon.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/readadc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/readadc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/readads.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
