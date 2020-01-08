@@ -4,6 +4,8 @@ nbproject/private
 # a config.ini is a customized version of config.tpl
 # use config.tpl to create your own config.ini before doing the first run
 config.ini
+/WebPage
+.gitignore
 
 # ignore objects and archives, anywhere in the tree.
 *.[oa]
