@@ -49,6 +49,9 @@ Eine mobile Variante mit geringerem Stromverbrauch auf Arduino-ESP32 Basis + Bat
 -L/usr/lib/arm-linux-gnueabihf  -lcurl -lwiringPi
 ```
 
+### License:
+See the **[LICENSE](https://github.com/mchresse/BeeLog/blob/master/LICENSE)** file for license rights and limitations (New BSD-clause).
+
 
 Viel Spass damit
 
