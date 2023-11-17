@@ -75,7 +75,7 @@ TEMPCHIVE2   = 0.00             ; temperature compensation Hive2 sensor
 
 [WEBUI]
 AUTOUPDATE  = 1                 ; init automatic update of FTP-& web site (=0 disabled)
-BEELOGWEB   = /var/www/beelog   ; root path to webserver home of beelog for log & data files
+BEELOGWEB   = /var/www/html/beelog   ; root path to webserver home of beelog for log & data files
 BEEKEEPER   = 'xxx'				; Full name of Owner/User/BeeKeeper (not used yet)
 LOCDAT1     = '-Garten-'        ; Location of BeeHive1 (not used yet)
 LOCDAT2     = 'xxx'             ; Street (not used yet)

@@ -33,6 +33,9 @@
 #include <stdlib.h>     //exit()
 #include <signal.h>     //signal()
 
+
+extern UBYTE BlackImage[];
+
 void  Handler(int signo)
 {
     //System Exit
@@ -42,13 +45,31 @@ void  Handler(int signo)
     exit(0);
 }
 
+
+int EPD_config(void){
+	// Exception handling:ctrl + c
+    signal(SIGINT, Handler);
+
+	if( DEV_Module_Init() != 0){
+		printf("    EPD-Config: e-Paper IOinit failed !\n");
+		return(-1);
+	}
+
+	printf("    EPD_Config: e-Paper Init and Clear...\r\n");
+	EPD_2IN7_Init();
+	EPD_2IN7_Clear();
+	
+    DEV_Delay_ms(2000);
+	return(0);
+}
+
+
 int epd_test(void)
 {
     // Exception handling:ctrl + c
     signal(SIGINT, Handler);
     
-    EPD_2in7_test();
-    
+    return(EPD_2in7_test());
 }
 
 
@@ -68,14 +89,8 @@ int EPD_2in7_test(void)
 	clock_gettime(CLOCK_REALTIME,&finish);
     printf("%ld S\r\n",finish.tv_sec-start.tv_sec);	
 
-    //Create a new image cache
-    UBYTE *BlackImage;
-    /* you have to edit the startup_stm32fxxx.s file and set a big enough heap size */
-    UWORD Imagesize = ((EPD_2IN7_WIDTH % 8 == 0)? (EPD_2IN7_WIDTH / 8 ): (EPD_2IN7_WIDTH / 8 + 1)) * EPD_2IN7_HEIGHT;
-    if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
-        printf("Failed to apply for black memory...\r\n");
-        return -1;
-    }
+    //Get global  image cache: BlackImage
+
     printf("Paint_NewImage\r\n");
     Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, 270, WHITE);
     
@@ -135,17 +150,10 @@ int EPD_2in7_test(void)
     EPD_2IN7_Display(BlackImage);
     DEV_Delay_ms(2000);
 #endif
-    printf("Clear...\r\n");
-    // EPD_2IN7_Clear();
-    free(BlackImage);
+    printf("Clear...\r\n");    // EPD_2IN7_Clear();
     
 #if 1 // show image for array
     printf("show Gray------------------------\r\n");
-    Imagesize = ((EPD_2IN7_WIDTH % 4 == 0)? (EPD_2IN7_WIDTH / 4 ): (EPD_2IN7_WIDTH / 4 + 1)) * EPD_2IN7_HEIGHT;
-    if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
-        printf("Failed to apply for black memory...\r\n");
-        return -1;
-    }
     printf("4 grayscale display\r\n");
     EPD_2IN7_Init_4Gray();
     Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, 270, WHITE);
@@ -195,9 +203,8 @@ int EPD_2in7_test(void)
     // close 5V
     printf("Goto Sleep...\r\n");
     EPD_2IN7_Sleep();
-    free(BlackImage);
-    BlackImage = NULL;
     DEV_Delay_ms(2000);//important, at least 2s
+
     printf("close 5V, Module enters 0 power consumption ...\r\n");
     DEV_Module_Exit();
 

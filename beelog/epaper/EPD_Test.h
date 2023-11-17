@@ -37,6 +37,6 @@
 #include "Debug.h"
 #include <stdlib.h> // malloc() free()
 
-
+int EPD_config(void);
 int EPD_2in7_test(void);
 #endif

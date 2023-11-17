@@ -139,14 +139,20 @@ FILE *	tcpufile;
  * - void
  ******************************************************************************/
 void PutStartScreen(){
-//	EPD_2in7_test();
-	
-	printf("Paint_NewImage\r\n");
-	Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, 270, WHITE);
+// EPD_2in7_test();
+	BHLOG(LOGMON) printf("Paint_NewImage\r\n");
+	Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_270, WHITE);
     
-    printf("show window BMP: 100 x 100\r\n");
+    BHLOG(LOGMON) printf("show Start BMP\r\n");
     Paint_SelectImage(BlackImage);
-    GUI_ReadBmp("./100x100.bmp", 50, 50);
+
+	char sbuf[PATHLEN];
+	sprintf(sbuf, "%s/pic/2in7.bmp", cfgini->bh_home);
+
+    if(GUI_ReadBmp(sbuf , 0, 00) <0) {
+		printf(" => StartScreen: %s not found\n", sbuf);
+		return;
+	}
     EPD_2IN7_Display(BlackImage);
     DEV_Delay_ms(2000);
 }
@@ -181,55 +187,52 @@ unsigned char linebuf[EPD_2IN7_HEIGHT/8];
 char		  TimeString[128];
 struct tm *   tinfo;
 
+    EPD_2IN7_Init();
+    DEV_Delay_ms(500);
+	
 	BHLOG(LOGMON) printf("    BeeHive: Preparing E-paper Frame Update ...\n");	
-    EPD_2IN7_Clear();		// clear Frame Buffer
+//    EPD_2IN7_Clear();		// clear Frame Buffer only in partial update
 
 	// For testing: Display default image buffers
-    printf("Paint_NewImage\r\n");
-    Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_90, UNCOLORED);
+    BHLOG(LOGMON) printf("Paint_NewImage\r\n");	// 264 x 176
+    Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_270, WHITE);
     Paint_SelectImage(BlackImage);
     Paint_Clear(WHITE);
 	
     /* For simplicity, the arguments are explicit numerical coordinates */
-    Paint_SetRotate(ROTATE_90);		// horizontal view
+//    Paint_SetRotate(ROTATE_270);		// horizontal view
 
-	sprintf(linebuf, "BeeHive v%s", cfgini->version);
+	sprintf(linebuf, "  BeeLog v%s  ", cfgini->version);
     Paint_DrawString_EN(0, 0, linebuf, &Font24, BLACK, WHITE);
-	Paint_DrawString_EN(10, 20, "hello world", &Font12, BLACK, WHITE);
 
 	tinfo = localtime(&MyTime.tv_sec);
-	strftime(TimeString, 80, "%d.%m.%y %H:%M", tinfo);	
-    Paint_DrawString_EN(0, 20, TimeString, &Font16, BLACK, WHITE);
+	strftime(TimeString, 80, "    %d.%m.%y %H:%M", tinfo);	
+    Paint_DrawString_EN(0, 28, TimeString, &Font16, WHITE, BLACK);
 
-	Paint_DrawLine(0, 33, EPD_2IN7_WIDTH, 33, COLORED, DOT_PIXEL_1X1, LINE_STYLE_SOLID);
-
-	sprintf(linebuf, "%s: %s", mondata.lanportname, mondata.ipv4);
-    Paint_DrawString_EN(0, 36, linebuf, &Font16, BLACK, WHITE);
+	sprintf(linebuf, "  %s: %s", mondata.lanportname, mondata.ipv4);
+    Paint_DrawString_EN(0, 44, linebuf, &Font16, WHITE, BLACK);
 
 	// print 2 bracketed rectangles for stronger line
-	Paint_DrawRectangle(0, 52, EPD_2IN7_HEIGHT-1, EPD_2IN7_WIDTH-1, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	Paint_DrawRectangle(1, 53, EPD_2IN7_HEIGHT-2, EPD_2IN7_WIDTH-2, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+	Paint_DrawRectangle(0, 60, EPD_2IN7_HEIGHT-1, EPD_2IN7_WIDTH-1, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+	Paint_DrawRectangle(1, 61, EPD_2IN7_HEIGHT-2, EPD_2IN7_WIDTH-2, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
 	
-	sprintf(linebuf, "Weight : %3.2f kg", bhdb.dlog[didx].HiveWeight1);
-    Paint_DrawString_EN(2, 58, linebuf, &Font20, BLACK, WHITE);
+	sprintf(linebuf, " Weight : %3.2f kg", bhdb.dlog[didx].HiveWeight1);
+    Paint_DrawString_EN(2, 66, linebuf, &Font20, WHITE, BLACK);
 
-	sprintf(linebuf, "TempExt: %3.1f C", bhdb.dlog[didx].TempExtern);
-    Paint_DrawString_EN(2, 80, linebuf, &Font20, BLACK, WHITE);
+	sprintf(linebuf, " TempExt: %3.1f C", bhdb.dlog[didx].TempExtern);
+    Paint_DrawString_EN(2, 94, linebuf, &Font20, WHITE, BLACK);
 
-	sprintf(linebuf, "TempHv1: %3.1f C", bhdb.dlog[didx].TempHive1);
-    Paint_DrawString_EN(2, 100, linebuf, &Font20, BLACK, WHITE);
+	sprintf(linebuf, " TempHv1: %3.1f C", bhdb.dlog[didx].TempHive1);
+    Paint_DrawString_EN(2, 114, linebuf, &Font20, WHITE, BLACK);
 	
-	sprintf(linebuf, " ");		// free/empty line
-    Paint_DrawString_EN(2, 120, linebuf, &Font20, BLACK, WHITE);
-
 	sprintf(linebuf, "Power: %1.1fV - %1.1fV", bhdb.dlog[didx].Batt3V, bhdb.dlog[didx].Batt5V);
-    Paint_DrawString_EN(2, 154, linebuf, &Font20, BLACK, WHITE);
+    Paint_DrawString_EN(2, 154, linebuf, &Font20, WHITE, BLACK);
 	
     /* Finally display the frame_buffer */
     EPD_2IN7_Display(BlackImage);
     DEV_Delay_ms(2000);
 
-    printf("Goto Sleep...\r\n");
+    BHLOG(LOGMON) printf("Goto Sleep...\r\n");
     EPD_2IN7_Sleep();
 
 	return;

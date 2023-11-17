@@ -79,7 +79,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib/arm-linux-gnueabihf -lcurl -lwiringPi -lm -lbcm2835
+LDLIBSOPTIONS=-L/usr/lib/arm-linux-gnueabihf -lbcm2835 -lwiringPi -lm -lcurl
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -87,7 +87,7 @@ LDLIBSOPTIONS=-L/usr/lib/arm-linux-gnueabihf -lcurl -lwiringPi -lm -lbcm2835
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/beelog: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/beelog ${OBJECTFILES} ${LDLIBSOPTIONS}
+	g++ -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/beelog ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/beelog/beelog.o: beelog/beelog.c
 	${MKDIR} -p ${OBJECTDIR}/beelog

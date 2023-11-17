@@ -14,7 +14,7 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=g++
+CC=gcc
 CCC=g++
 CXX=g++
 FC=gfortran
@@ -79,7 +79,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lcurl -lwiringPi -lbcm2835 -lm
+LDLIBSOPTIONS=-L/usr/lib/arm-linux-gnueabihf -lwiringPi -lm -lbcm2835 -lcurl
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

@@ -244,7 +244,7 @@ int main(int argc, char** argv) {
 		bhdb.dlog[didx].TempHive2	= temphive2;
 
 		// get Bee Hive weight of Port A
-		weight1 = gethx711(offset, tempext, i, 0);	// get all sensor data: weight1 & temp.1 on channel A(128)
+		weight1 = gethx711(offset, tempext, 1, 0);	// get all sensor data: weight1 & temp.1 on channel A(128)
 		weight2=0;
 		//	weight2 = gethx711(offset2, tempext, i, 0);		// get all sensor data: weight2 & temp.2  on channel A(128)
 		//	BHLOG(LOGBH) printf("Gewicht: %3.3f kg", weight2); 
@@ -468,14 +468,14 @@ w1_values * w1_dev;	// 1-wire sensor data field pointer
 		BHLOG(LOGBH) beelog(sbuf);
 	}
 
-//	reset datastor, alarmflag field and weather forecast field
+	//	reset datastor, alarmflag field and weather forecast field
 		initbhdb(&bhdb);
 
-// Get system runtime data	-> result is in globale "struct mondata"
+	// Get system runtime data	-> result is in globale "struct mondata"
 		BHLOG(LOGMON) printf("    BeeLog-Init: Start raspimon...\n");
 		raspimon();	
 	
-// preset ADC / ADS device for battery management
+	// preset ADC / ADS device for battery management
 	// preset ADS1115 
 		BHLOG(LOGMON) printf("    BeeLog-Init: Start ADS-Init...\n");
 		i = ads_init(ADSI2CADR);
@@ -505,14 +505,11 @@ w1_values * w1_dev;	// 1-wire sensor data field pointer
 //
 	if( cfgini->hc_display == 1){
 		BHLOG(LOGMON) printf("    BeeLog-Init: Start init E-Paper\n");
-		if( DEV_Module_Init() != 0){
+		
+		if( EPD_config() < 0){
 			printf("    BeeLog-Init: e-Paper init failed !\n");
-				exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
-		printf("    BeeLog-Init: e-Paper Init and Clear...\r\n");
-		EPD_2IN7_Init();
-		EPD_2IN7_Clear();
-
 		// preset GPIO line status of Key 1-4
 		pinMode(cfgini->ep_key1, INPUT);
 		pinMode(cfgini->ep_key2, INPUT);
@@ -717,15 +714,15 @@ CURL *curlhandle = NULL;
 			curl_global_init(CURL_GLOBAL_ALL);
 			curlhandle = curl_easy_init();
 			
-			if(rc = ftpput(curlhandle, url, cfgini->web_root, sbuf,	path, sbuf,		NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0 ){
+			if(rc = ftpput(curlhandle, url, cfgini->web_root, sbuf,	path, sbuf, NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0 ){
 				BHLOG(LOGXFER) printf("    Export: ftpput failed with rc=%i, curlcount=%i\n", rc, curlcount);
 				rc=-10;
 			} else			
-			if(rc = ftpput(curlhandle, url, cfgini->web_root, sbuf2,	path, sbuf2,	NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0){
+			if(rc = ftpput(curlhandle, url, cfgini->web_root, sbuf2,	path, sbuf2, NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0){
 				BHLOG(LOGXFER) printf("    Export: ftpput failed with rc=%i, curlcount=%i\n", rc, curlcount);
 				rc=-11;
 			} else
-			if(rc = ftpput(curlhandle, url, cfgini->web_root, logfile,	path, logfile,	NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0){
+			if(rc = ftpput(curlhandle, url, cfgini->web_root, logfile,	path, logfile, NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport) !=0){
 				BHLOG(LOGXFER) printf("    Export: ftpput failed with rc=%i, curlcount=%i\n", rc, curlcount);
 				rc=-12;
 			} else

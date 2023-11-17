@@ -114,10 +114,12 @@
           </preprocessorList>
         </ccTool>
         <linkerTool>
+          <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
-            <linkerOptionItem>-L/usr/lib/arm-linux-gnueabihf  -lcurl -lwiringPi</linkerOptionItem>
-            <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+            <linkerOptionItem>-L/usr/lib/arm-linux-gnueabihf</linkerOptionItem>
             <linkerOptionItem>-lbcm2835</linkerOptionItem>
+            <linkerOptionItem>-lwiringPi -lm</linkerOptionItem>
+            <linkerOptionItem> -lcurl</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -243,7 +245,7 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
-          <commandlineTool>g++</commandlineTool>
+          <commandlineTool>gcc</commandlineTool>
           <incDir>
             <pElem>beelog/epaper</pElem>
           </incDir>
@@ -269,10 +271,10 @@
         <linkerTool>
           <commandlineTool>g++</commandlineTool>
           <linkerLibItems>
-            <linkerOptionItem>-lcurl</linkerOptionItem>
-            <linkerOptionItem>-lwiringPi</linkerOptionItem>
+            <linkerOptionItem>-L/usr/lib/arm-linux-gnueabihf</linkerOptionItem>
+            <linkerOptionItem>-lwiringPi -lm</linkerOptionItem>
             <linkerOptionItem>-lbcm2835</linkerOptionItem>
-            <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+            <linkerOptionItem>-lcurl</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
