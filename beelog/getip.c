@@ -30,9 +30,9 @@
 #include "curlftp.h"
 #include "beehive.h"
 #include "beelog.h"
-#include "epaper/epdif.h"
-#include "epaper/epd2in7.h"
-#include "epaper/epdpaint.h"
+#include "epaper/fonts.h"
+#include "epaper/EPD_2in7.h"
+#include "epaper/GUI_Paint.h"
 #include "raspimon.h"
 
 int getipv4(char * portname, char * ipv4){ 

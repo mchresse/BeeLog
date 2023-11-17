@@ -74,12 +74,13 @@
 #include "beelog.h"
 #include "readadc.h"
 
+#include "epaper/EPD_Test.h"
+#include "epaper/EPD_2in7.h"
 #include "epaper/fonts.h"
-#include "epaper/epdif.h"
-#include "epaper/epd2in7.h"
-#include "epaper/epdpaint.h"
+#include "epaper/EPD_2in7.h"
+#include "epaper/GUI_Paint.h"
+#include "epaper/GUI_BMPfile.h"
 
-#include "epdwrapper.h"
 #include "raspimon.h"
 #include "adslib.h"
 
@@ -88,9 +89,6 @@
  ******************************************************************************/
 
 struct timeval	MyTime;		// contains time snap in seconds-usecs to epoche time
-
-Paint* ppaint;				// keep ptr of global E-paper Class: Epd
-Epd*   pepd;				// keep ptr of global E-paper Class: Paint
 
 mondat * dmon;				// data collection of RPi runtime Parameters -> raspimion.c
 extern int	w1_devidx;		// counts # of detected W1 slave devices 1...W1_MAX_SLAVES
@@ -140,9 +138,7 @@ int main(int argc, char** argv) {
 
 	//	Show E-Paper Startup Screen with discovered Runtime data
 	if(cfgini->hc_display == 1){
-			frame_buffer = (unsigned char*)malloc(EPD_WIDTH / 8 * EPD_HEIGHT);
-			paint_Init0(ppaint, frame_buffer, EPD_WIDTH, EPD_HEIGHT);
-			PutStartScreen(pepd, ppaint, frame_buffer, didx );
+		PutStartScreen();
 	}
 	
 	// Start of IO data logging endless-loop
@@ -178,7 +174,7 @@ int main(int argc, char** argv) {
 		// battlevel = readadc2(ADCCH0);	// get current battery level at CH0
 		battlevel = (float) readads(ADS_ABSAIN0);	// read 5V battery level on ADS port 0 to GND
 		if (battlevel <0){
-			BHLOG(LOGMON) printf("    ReadADS: channel#%d: RC=%i\n",ADS_ABSAIN0/16-4, battlevel);
+			BHLOG(LOGMON) printf("    ReadADS: channel#%d: RC=%f\n",ADS_ABSAIN0/16-4, battlevel);
 			bhdb.dlog[didx].Batt3V = 3.3;
 		}else{
 			bhdb.dlog[didx].Batt3V = battlevel * VPS;	// convert result to voltage range
@@ -189,7 +185,7 @@ int main(int argc, char** argv) {
 		// battlevel = readadc2(ADCCH3);	// get current battery level at CH0
 		battlevel = (float) readads(ADS_ABSAIN3);	// read 5V battery level on ADS port 3 to GND
 		if (battlevel <0){
-			BHLOG(LOGMON) printf("    ReadADS: channel#%d: RC=%i\n",ADS_ABSAIN3/16-4, battlevel);
+			BHLOG(LOGMON) printf("    ReadADS: channel#%d: RC=%f\n",ADS_ABSAIN3/16-4, battlevel);
 			bhdb.dlog[didx].Batt5V = 5.0;
 		}else{
 			bhdb.dlog[didx].Batt5V = battlevel * VPS * 2;	// convert result to voltage range
@@ -335,7 +331,7 @@ int main(int argc, char** argv) {
 		
 		// update monitoring data of ePaper display
 		if(cfgini->hc_display == 1){
-			PutStartScreen(pepd, ppaint, frame_buffer, didx );
+			PutStatusScreen(didx );
 		}
 		
 		// update Webpage data destination
@@ -505,16 +501,18 @@ w1_values * w1_dev;	// 1-wire sensor data field pointer
 	}
 
 //
-// WaveShare E-paper Konfiguration
+// WaveShare E-paper Configuration
 //
-	if(cfgini->hc_display == 1){
+	if( cfgini->hc_display == 1){
 		BHLOG(LOGMON) printf("    BeeLog-Init: Start init E-Paper\n");
-		pepd	= epd_callback();	// get ptr of class Paint
-		ppaint	= paint_callback();	// get ptr of class Epd
-	
-		if (epd_Init(pepd) != 0) {
-		    printf("    BeeLog-Init: e-Paper init failed !\n");
+		if( DEV_Module_Init() != 0){
+			printf("    BeeLog-Init: e-Paper init failed !\n");
+				exit(EXIT_FAILURE);
 		}
+		printf("    BeeLog-Init: e-Paper Init and Clear...\r\n");
+		EPD_2IN7_Init();
+		EPD_2IN7_Clear();
+
 		// preset GPIO line status of Key 1-4
 		pinMode(cfgini->ep_key1, INPUT);
 		pinMode(cfgini->ep_key2, INPUT);
@@ -758,7 +756,7 @@ CURL *curlhandle = NULL;
 			system(cmdline);			
 
 			BHLOG(LOGBH){
-				sprintf(cmdline,"/usr/bin/curl -T xxl_%s -n ftp://%s:%s/%s/xxl_%s", logfile, url, cfgini->exp_ftpport, path, logfile );
+				sprintf(cmdline,"/usr/bin/curl -T ./%s -n ftp://%s:%s/%s/%s", logfile2, url, cfgini->exp_ftpport, path, logfile2 );
 				BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 				system(cmdline);
 			}

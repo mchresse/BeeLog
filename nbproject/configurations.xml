@@ -8,11 +8,6 @@
       <itemPath>beelog/beehive.h</itemPath>
       <itemPath>beelog/beelog.h</itemPath>
       <itemPath>beelog/curlftp.h</itemPath>
-      <itemPath>beelog/epaper/epd2in7.h</itemPath>
-      <itemPath>beelog/epaper/epdif.h</itemPath>
-      <itemPath>beelog/epaper/epdpaint.h</itemPath>
-      <itemPath>beelog/epdwrapper.h</itemPath>
-      <itemPath>beelog/epaper/fonts.h</itemPath>
       <itemPath>beelog/get1wire.h</itemPath>
       <itemPath>beelog/getini.h</itemPath>
       <itemPath>beelog/hx711.h</itemPath>
@@ -28,17 +23,38 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="epd" projectFiles="true">
-        <itemPath>beelog/epaper/WhiteFrame.c</itemPath>
-        <itemPath>beelog/epaper/epd2in7.cpp</itemPath>
-        <itemPath>beelog/epaper/epdif.cpp</itemPath>
-        <itemPath>beelog/epaper/epdpaint.cpp</itemPath>
-        <itemPath>beelog/epdwrapper.cpp</itemPath>
+      <logicalFolder name="f1" displayName="epaper" projectFiles="true">
+        <itemPath>beelog/epaper/100x100.bmp</itemPath>
+        <itemPath>beelog/epaper/100x80.bmp</itemPath>
+        <itemPath>beelog/epaper/2in7.bmp</itemPath>
+        <itemPath>beelog/epaper/2in7_Scale.bmp</itemPath>
+        <itemPath>beelog/epaper/800x480.bmp</itemPath>
+        <itemPath>beelog/epaper/DEV_Config.c</itemPath>
+        <itemPath>beelog/epaper/DEV_Config.h</itemPath>
+        <itemPath>beelog/epaper/Debug.h</itemPath>
+        <itemPath>beelog/epaper/EPD_2in7.c</itemPath>
+        <itemPath>beelog/epaper/EPD_2in7.h</itemPath>
+        <itemPath>beelog/epaper/EPD_2in7_test.c</itemPath>
+        <itemPath>beelog/epaper/EPD_Test.h</itemPath>
+        <itemPath>beelog/epaper/GUI_BMPfile.c</itemPath>
+        <itemPath>beelog/epaper/GUI_BMPfile.h</itemPath>
+        <itemPath>beelog/epaper/GUI_Paint.c</itemPath>
+        <itemPath>beelog/epaper/GUI_Paint.h</itemPath>
+        <itemPath>beelog/epaper/ImageData.c</itemPath>
+        <itemPath>beelog/epaper/ImageData.h</itemPath>
+        <itemPath>beelog/epaper/RPI_sysfs_gpio.c</itemPath>
+        <itemPath>beelog/epaper/RPI_sysfs_gpio.h</itemPath>
+        <itemPath>beelog/epaper/dev_hardware_SPI.c</itemPath>
+        <itemPath>beelog/epaper/dev_hardware_SPI.h</itemPath>
         <itemPath>beelog/epaper/font12.c</itemPath>
+        <itemPath>beelog/epaper/font12CN.c</itemPath>
         <itemPath>beelog/epaper/font16.c</itemPath>
         <itemPath>beelog/epaper/font20.c</itemPath>
         <itemPath>beelog/epaper/font24.c</itemPath>
+        <itemPath>beelog/epaper/font24CN.c</itemPath>
         <itemPath>beelog/epaper/font8.c</itemPath>
+        <itemPath>beelog/epaper/fonts.h</itemPath>
+        <itemPath>beelog/epaper/x1.bmp</itemPath>
       </logicalFolder>
       <itemPath>beelog/beelog.c</itemPath>
       <itemPath>beelog/bhdata.c</itemPath>
@@ -74,15 +90,34 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>beelog/epaper</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>RPI</Elem>
+            <Elem>USE_BCM2835_LIB</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <architecture>1</architecture>
+          <standard>11</standard>
+          <commandlineTool>g++</commandlineTool>
+          <preprocessorList>
+            <Elem>RPI</Elem>
+            <Elem>USE_BCM2835_LIB</Elem>
+          </preprocessorList>
+        </ccTool>
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>-L/usr/lib/arm-linux-gnueabihf  -lcurl -lwiringPi</linkerOptionItem>
             <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+            <linkerOptionItem>-lbcm2835</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -102,21 +137,53 @@
       </item>
       <item path="beelog/curlftp.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/WhiteFrame.c" ex="false" tool="0" flavor2="0">
+      <item path="beelog/epaper/100x100.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epd2in7.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/100x80.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epd2in7.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/2in7.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdif.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/2in7_Scale.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdif.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/800x480.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdpaint.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/DEV_Config.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdpaint.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/DEV_Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/Debug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_Test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_BMPfile.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_BMPfile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_Paint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_Paint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/ImageData.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/ImageData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/RPI_sysfs_gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/RPI_sysfs_gpio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/dev_hardware_SPI.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/dev_hardware_SPI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="beelog/epaper/font12.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font12CN.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="beelog/epaper/font16.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -124,13 +191,13 @@
       </item>
       <item path="beelog/epaper/font24.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="beelog/epaper/font24CN.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="beelog/epaper/font8.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="beelog/epaper/fonts.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epdwrapper.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="beelog/epdwrapper.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/x1.bmp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="beelog/get1wire.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -176,9 +243,22 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>beelog/epaper</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>RPI</Elem>
+            <Elem>USE_BCM2835_LIB</Elem>
+          </preprocessorList>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>11</standard>
+          <preprocessorList>
+            <Elem>RPI</Elem>
+            <Elem>USE_BCM2835_LIB</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -186,6 +266,15 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <commandlineTool>g++</commandlineTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lcurl</linkerOptionItem>
+            <linkerOptionItem>-lwiringPi</linkerOptionItem>
+            <linkerOptionItem>-lbcm2835</linkerOptionItem>
+            <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="beelog/adslib.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -203,21 +292,53 @@
       </item>
       <item path="beelog/curlftp.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/WhiteFrame.c" ex="false" tool="0" flavor2="0">
+      <item path="beelog/epaper/100x100.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epd2in7.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/100x80.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epd2in7.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/2in7.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdif.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/2in7_Scale.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdif.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/800x480.bmp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdpaint.cpp" ex="false" tool="1" flavor2="0">
+      <item path="beelog/epaper/DEV_Config.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="beelog/epaper/epdpaint.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/DEV_Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/Debug.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_2in7_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/EPD_Test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_BMPfile.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_BMPfile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_Paint.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/GUI_Paint.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/ImageData.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/ImageData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/RPI_sysfs_gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/RPI_sysfs_gpio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="beelog/epaper/dev_hardware_SPI.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/dev_hardware_SPI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="beelog/epaper/font12.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="beelog/epaper/font12CN.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="beelog/epaper/font16.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -225,13 +346,13 @@
       </item>
       <item path="beelog/epaper/font24.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="beelog/epaper/font24CN.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="beelog/epaper/font8.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="beelog/epaper/fonts.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="beelog/epdwrapper.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="beelog/epdwrapper.h" ex="false" tool="3" flavor2="0">
+      <item path="beelog/epaper/x1.bmp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="beelog/get1wire.c" ex="false" tool="0" flavor2="0">
       </item>

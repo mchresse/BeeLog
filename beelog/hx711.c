@@ -90,7 +90,7 @@ int inithx711(int hxidx, int channel){
 	BHLOG(LOGHX1) printf("    HX: Init HX711 Modul #%i ...\n", hxidx);
 	setHighPri();
 
-	// preset GPIO line status of FX711 module & TestLED
+	// preset GPIO line status of HX711 module & TestLED
 	setup_gpio();		// define input and output lines + pullup state
 
 	BHLOG(LOGHX1) printf("    HX: Init Tara Button -> register ISR routine\n");
