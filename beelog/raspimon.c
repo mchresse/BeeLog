@@ -32,18 +32,24 @@
 #include "beehive.h"
 #include "beelog.h"
 
+#include "epaper/EPD_Test.h"
 #include "epaper/fonts.h"
-#include "epaper/epdif.h"
-#include "epaper/epd2in7.h"
-#include "epaper/epdpaint.h"
-#include "epdwrapper.h"
+#include "epaper/EPD_2in7.h"
+#include "epaper/GUI_Paint.h"
+#include "epaper/GUI_BMPfile.h"
 
 #include "raspimon.h"
 
+#define COLORED BLACK
+#define UNCOLORED WHITE
+
+
 mondat mondata;
-extern	Paint* ppaint;				// keep ptr of global E-paper Class: Epd
-extern  Epd*   pepd;				// keep ptr of global E-paper Class: Paint
 extern const unsigned char gImage_Lea_Portrait[];	// Test Image for E-Paper
+// Display scratch area
+#define Imagesize   EPD_2IN7_WIDTH * EPD_2IN7_HEIGHT
+UBYTE BlackImage[Imagesize];
+
 
 /*******************************************************************************
  * RASPIMON()
@@ -124,6 +130,36 @@ FILE *	tcpufile;
 
 /*******************************************************************************
  * PutStartScreen()
+ * Display startup Image frame to EPaper
+ *
+ * Input: 
+ *
+ * Global: 
+ * Output:
+ * - void
+ ******************************************************************************/
+void PutStartScreen(){
+// EPD_2in7_test();
+	BHLOG(LOGMON) printf("Paint_NewImage\r\n");
+	Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_90, WHITE);
+    
+    BHLOG(LOGMON) printf("show Start BMP\r\n");
+    Paint_SelectImage(BlackImage);
+
+	char sbuf[PATHLEN];
+	sprintf(sbuf, "%s/pic/2in7.bmp", cfgini->bh_home);
+
+    if(GUI_ReadBmp(sbuf , 0, 00) <0) {
+		printf(" => StartScreen: %s not found\n", sbuf);
+		return;
+	}
+    EPD_2IN7_Display(BlackImage);
+    DEV_Delay_ms(2000);
+}
+
+
+/*******************************************************************************
+ * PutStatusScreen()
  * Function to display Welcome Info via E-paper "WaveShare 2.7" B/W " (SPI)
  * 2.7" Epape: EPD_HEIGHT 264, EPD_WIDTH = 176, (-> Rotate = 90) 
  * 			//  BxH  c/line  lines
@@ -145,58 +181,59 @@ FILE *	tcpufile;
  * Output:
  * - void
  ******************************************************************************/
-void PutStartScreen(Epd* pepd, Paint* ppaint, unsigned char * fbuf, int didx ){
+void PutStatusScreen(int didx ){
 
-unsigned char linebuf[EPD_HEIGHT/8];
-char	TimeString[128];
-struct tm * tinfo;
+unsigned char linebuf[EPD_2IN7_HEIGHT/8];
+char		  TimeString[128];
+struct tm *   tinfo;
 
-	
-// For testing: Display default image buffers
-//    epd_DisplayFrame(pepd, gImage_Lea_Portrait);
-//    epd.DisplayFrame(pepd, WhiteFrame);
-//    epd.DisplayFrame(pepd, BlackFrame);
-//	return ();	// shortcut this program for tests
+    EPD_2IN7_Init();
+    DEV_Delay_ms(500);
 	
 	BHLOG(LOGMON) printf("    BeeHive: Preparing E-paper Frame Update ...\n");	
-    paint_Clear(ppaint, UNCOLORED);		// clear Frame Buffer
+//    EPD_2IN7_Clear();		// clear Frame Buffer only in partial update
 
+	// For testing: Display default image buffers
+    BHLOG(LOGMON) printf("Paint_NewImage\r\n");	// 264 x 176
+    Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_90, WHITE);
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(WHITE);
+	
     /* For simplicity, the arguments are explicit numerical coordinates */
-    paint_SetRotate(ppaint, ROTATE_90);		// horizontal view
+    Paint_SetRotate(ROTATE_90);		// horizontal view
 
-	sprintf(linebuf, "BeeHive v%s", cfgini->version);
-    paint_DrawStringAt(ppaint, 0, 0, linebuf, &Font24, COLORED);
+	sprintf(linebuf, "  BeeLog v%s  ", cfgini->version);
+    Paint_DrawString_EN(0, 0, linebuf, &Font24, BLACK, WHITE);
 
 	tinfo = localtime(&MyTime.tv_sec);
-	strftime(TimeString, 80, "%d.%m.%y %H:%M", tinfo);	
-    paint_DrawStringAt(ppaint, 0, 20, TimeString, &Font16, COLORED);
+	strftime(TimeString, 80, "    %d.%m.%y %H:%M", tinfo);	
+    Paint_DrawString_EN(0, 28, TimeString, &Font16, WHITE, BLACK);
 
-	paint_DrawVerticalLine(ppaint, 0, 33, 3, COLORED);
-
-	sprintf(linebuf, "%s: %s", mondata.lanportname, mondata.ipv4);
-    paint_DrawStringAt(ppaint, 0, 36, linebuf, &Font16, COLORED);
+	sprintf(linebuf, "  %s: %s", mondata.lanportname, mondata.ipv4);
+    Paint_DrawString_EN(0, 44, linebuf, &Font16, WHITE, BLACK);
 
 	// print 2 bracketed rectangles for stronger line
-	paint_DrawRectangle(ppaint, 0, 52, EPD_HEIGHT-1, EPD_WIDTH-1, COLORED);
-	paint_DrawRectangle(ppaint, 1, 53, EPD_HEIGHT-2, EPD_WIDTH-2, COLORED);
+	Paint_DrawRectangle(0, 60, EPD_2IN7_HEIGHT-1, EPD_2IN7_WIDTH-1, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+	Paint_DrawRectangle(1, 61, EPD_2IN7_HEIGHT-2, EPD_2IN7_WIDTH-2, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
 	
-	sprintf(linebuf, "Weight : %3.2f kg", bhdb.dlog[didx].HiveWeight1);
-    paint_DrawStringAt(ppaint, 2, 58, linebuf, &Font20, COLORED);
+	sprintf(linebuf, " Weight : %3.2f kg", bhdb.dlog[didx].HiveWeight1);
+    Paint_DrawString_EN(2, 66, linebuf, &Font20, WHITE, BLACK);
 
-	sprintf(linebuf, "TempExt: %3.1f C", bhdb.dlog[didx].TempExtern);
-    paint_DrawStringAt(ppaint, 2, 80, linebuf, &Font20, COLORED);
+	sprintf(linebuf, " TempExt: %3.1f C", bhdb.dlog[didx].TempExtern);
+    Paint_DrawString_EN(2, 94, linebuf, &Font20, WHITE, BLACK);
 
-	sprintf(linebuf, "TempHv1: %3.1f C", bhdb.dlog[didx].TempHive1);
-    paint_DrawStringAt(ppaint, 2, 100, linebuf, &Font20, COLORED);
+	sprintf(linebuf, " TempHv1: %3.1f C", bhdb.dlog[didx].TempHive1);
+    Paint_DrawString_EN(2, 114, linebuf, &Font20, WHITE, BLACK);
 	
-	sprintf(linebuf, " ");		// free/empty line
-    paint_DrawStringAt(ppaint, 2, 120, linebuf, &Font20, COLORED);
-
 	sprintf(linebuf, "Power: %1.1fV - %1.1fV", bhdb.dlog[didx].Batt3V, bhdb.dlog[didx].Batt5V);
-    paint_DrawStringAt(ppaint, 2, 154, linebuf, &Font20, COLORED);
+    Paint_DrawString_EN(2, 154, linebuf, &Font20, WHITE, BLACK);
 	
     /* Finally display the frame_buffer */
-    epd_DisplayFrame(pepd, paint_GetImage(ppaint));
-	
+    EPD_2IN7_Display(BlackImage);
+    DEV_Delay_ms(2000);
+
+    BHLOG(LOGMON) printf("Goto Sleep...\r\n");
+    EPD_2IN7_Sleep();
+
 	return;
 }

@@ -37,7 +37,9 @@ void	raspimon(void);
 int		getipv4(char * portname, char * ipv4);
 void	getmac (char * portname, char * mymac);
 int		getipv4_2 (char * portname, char * ipv4);
-void	PutStartScreen(Epd* pepd, Paint* ppaint, unsigned char * fbuf, int didx);
+void	PutStartScreen(void);
+void	PutStatusScreen(int didx);
+
 
 
 #ifdef __cplusplus
