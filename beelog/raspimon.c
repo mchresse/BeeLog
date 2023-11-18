@@ -141,7 +141,7 @@ FILE *	tcpufile;
 void PutStartScreen(){
 // EPD_2in7_test();
 	BHLOG(LOGMON) printf("Paint_NewImage\r\n");
-	Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_270, WHITE);
+	Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_90, WHITE);
     
     BHLOG(LOGMON) printf("show Start BMP\r\n");
     Paint_SelectImage(BlackImage);
@@ -195,12 +195,12 @@ struct tm *   tinfo;
 
 	// For testing: Display default image buffers
     BHLOG(LOGMON) printf("Paint_NewImage\r\n");	// 264 x 176
-    Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_270, WHITE);
+    Paint_NewImage(BlackImage, EPD_2IN7_WIDTH, EPD_2IN7_HEIGHT, ROTATE_90, WHITE);
     Paint_SelectImage(BlackImage);
     Paint_Clear(WHITE);
 	
     /* For simplicity, the arguments are explicit numerical coordinates */
-//    Paint_SetRotate(ROTATE_270);		// horizontal view
+    Paint_SetRotate(ROTATE_90);		// horizontal view
 
 	sprintf(linebuf, "  BeeLog v%s  ", cfgini->version);
     Paint_DrawString_EN(0, 0, linebuf, &Font24, BLACK, WHITE);
