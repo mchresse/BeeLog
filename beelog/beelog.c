@@ -67,7 +67,7 @@ int beelog(char * comment){
 char	logline[LOGLINELEN];	// text buffer of one log line
 FILE *	bhlog;					// file handle of logfile
 char	logpath[1024];			// log file path buffer	
-struct timeval	MyTime;
+
 
 	// build logdata string ->  get current timestamp
 	gettimeofday(&MyTime, NULL);

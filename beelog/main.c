@@ -87,8 +87,21 @@
 /******************************************************************************
  * global data fields
  ******************************************************************************/
+dataset		bhdb;					// Database of measured values
+unsigned char		lflags;			// log flag field
+alarmfield	alarms;
+wdataset	webweather[MAXWDAYS];
+char		csv_notice[1024];		// free notice field for *.csv file
+int			curlcount;				// count curllib ftp xfer calls for debugging reasons
 
-struct timeval	MyTime;		// contains time snap in seconds-usecs to epoche time
+// The one and only global init parameter set buffer parsed from config.ini file
+configuration * cfgini;				// ptr. to struct with initial parameters
+
+struct timeval	MyTime;				// contains time snap in seconds-usecs to epoche time
+
+/******************************************************************************
+ * global data fields
+ ******************************************************************************/
 
 mondat * dmon;				// data collection of RPi runtime Parameters -> raspimion.c
 extern int	w1_devidx;		// counts # of detected W1 slave devices 1...W1_MAX_SLAVES
@@ -116,6 +129,7 @@ int main(int argc, char** argv) {
   unsigned char* frame_buffer;	// ptr. to Image buffer of E-Paper devcie
   w1_values *	 w1_devices;	// ptr. to 1-wire sensor data field
 								// w1_devidx is defined global
+  struct timeval	MyTime;
   
 // Start of main()
 	setbuf(stdout, NULL);		// disable buffering on stdout
@@ -550,9 +564,7 @@ w1_values * w1_dev;	// 1-wire sensor data field pointer
 int webui(dataset * data){
 	int rc=0;
 	
-	// A CURL commandline that works also:
-	// curl -T beelog2017.csv -u <user>:<passwd> -x socks5://socks.fsc.net:1080 ftp://ftp.randolphesser.de/beelog/beelog2017.csv
-	BHLOG(WEBUPD) printf("    WebUpd: started via ftp...\n");
+	BHLOG(WEBUPD) printf("    WebUpd: started via (S)ftp...\n");
 
 	if(cfgini->web_autoupdate == 0){ // FTP access not permitted
 		BHLOG(WEBUPD) printf("    WebUpd: no permission for FTP access by config.ini autoupdate flag\n");
@@ -621,7 +633,7 @@ int		rc=0;
 			rc = ftpget(url, path, sbuf,  cfgini->web_root, sbuf, NULL, NULL, cfgini->exp_ftpport, cfgini->exp_ftpproxy, cfgini->exp_ftpproxyport);
 #endif
 		}else if(impformat == IMPFORM_SYSTEM){	// start FTP transfer uing system() function
-		//	sprintf(cmdline,"curl -n ftp://%s:%s/%s/%s -o %s/ext%s", url, cfgini->exp_ftpport, path, cfgini->web_noticefile, cfgini->web_root, cfgini->web_noticefile );
+		//	sprintf(cmdline,"curl -k -n sftp://%s:%s/%s/%s -o %s/ext%s", url, cfgini->exp_ftpport, path, cfgini->web_noticefile, cfgini->web_root, cfgini->web_noticefile );
 		//	BHLOG(LOGXFER) printf("     Import: %s\n", cmdline);
 		//	system(cmdline);
 			BHLOG(LOGXFER) printf("    Import: started by FTP(system) but no job definition yet\n");
@@ -710,7 +722,7 @@ CURL *curlhandle = NULL;
 			curl_easy_cleanup(curlhandle);
 			curl_global_cleanup();
 #else
-			BHLOG(LOGXFER) printf("    Export: started by FTP(raw) to %s/%s\n", url, path);
+			BHLOG(LOGXFER) printf("    Export: started by FTP(raw) to %s:%s/%s\n", url, cfgini->exp_ftpport, path);
 			curl_global_init(CURL_GLOBAL_ALL);
 			curlhandle = curl_easy_init();
 			
@@ -739,21 +751,21 @@ CURL *curlhandle = NULL;
 		}else if(expformat == EXPFORM_SYSTEM){	
 		// start FTP transfer using cmdline call of curllib by system() function
 #ifndef BHSIM
-			sprintf(cmdline,"/usr/bin/curl -T %s/%s -n ftp://%s:%s/%s/%s", cfgini->web_root, sbuf, url, cfgini->exp_ftpport, path, sbuf );
+			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf, url, cfgini->exp_ftpport, path, sbuf );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -T %s/%s -n ftp://%s:%s/%s/%s", cfgini->web_root, sbuf2, url, cfgini->exp_ftpport, path, sbuf2 );
+			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf2, url, cfgini->exp_ftpport, path, sbuf2 );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -T %s/%s -n ftp://%s:%s/%s/%s", cfgini->web_root, logfile, url, cfgini->exp_ftpport, path, logfile );
+			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, logfile, url, cfgini->exp_ftpport, path, logfile );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -T %s/%s -n ftp://%s:%s/%s/%s", cfgini->web_root, cfgini->web_deffile, url, cfgini->exp_ftpport, path, cfgini->web_deffile );
+			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, cfgini->web_deffile, url, cfgini->exp_ftpport, path, cfgini->web_deffile );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);			
 
 			BHLOG(LOGBH){
-				sprintf(cmdline,"/usr/bin/curl -T ./%s -n ftp://%s:%s/%s/%s", logfile2, url, cfgini->exp_ftpport, path, logfile2 );
+				sprintf(cmdline,"/usr/bin/curl -k -n -T ./%s sftp://%s:%s/%s/%s", logfile2, url, cfgini->exp_ftpport, path, logfile2 );
 				BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 				system(cmdline);
 			}
@@ -842,7 +854,7 @@ int		modeoct;
 	idx = data->drowidx;
 
 	// get Web Noticefile and store as external one using system(curl) function
-	sprintf(cmdline,"/usr/bin/curl -n ftp://%s:%s/%s/%s -o %s/ext%s",
+	sprintf(cmdline,"/usr/bin/curl -k -n sftp://%s:%s/%s/%s -o %s/ext%s",
 			cfgini->exp_ftpurl, cfgini->exp_ftpport, cfgini->exp_ftppath, cfgini->web_noticefile, 
 			cfgini->web_root, cfgini->web_noticefile );
 #ifdef BHSIM
@@ -903,7 +915,7 @@ int		modeoct;
 	addwebnotice(series, notice, data);
 	
 	// overwrite web notice file remote by local reference file using system(curl) function
-	sprintf(cmdline,"/usr/bin/curl -T %s/%s -n ftp://%s:%s/%s/%s", 
+	sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", 
 			cfgini->web_root, cfgini->web_noticefile, 
 			cfgini->exp_ftpurl, cfgini->exp_ftpport, cfgini->exp_ftppath, cfgini->web_noticefile );
 	BHLOG(LOGXFER) printf("     GetNotice: reset web-notice file: %s\n", cmdline);
