@@ -59,6 +59,8 @@
 #include "beelog.h"
 
 long	samples[MAX_N_SAMPLES];	// global field of measured data per loop
+long	offset;					// store adapted offset (declared in hx711.h)
+volatile int reset_tara = 0;	// the ISR event counter (declared in isr.h)
  
 /*******************************************************************************
 * Function: inithx711()

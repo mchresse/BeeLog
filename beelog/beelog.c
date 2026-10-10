@@ -34,6 +34,16 @@
 #include "beehive.h"
 #include "beelog.h"
 
+// global data fields (declared extern in beehive.h)
+unsigned char	lflags;
+dataset			bhdb;
+alarmfield		alarms;
+wdataset		webweather[MAXWDAYS];
+char			csv_notice[1024];
+int				curlcount;
+configuration *	cfgini;
+struct timeval	MyTime;
+
 /*******************************************************************************
  * Global data reference section
  *******************************************************************************
