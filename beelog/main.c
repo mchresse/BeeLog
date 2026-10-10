@@ -854,7 +854,7 @@ int		modeoct;
 	idx = data->drowidx;
 
 	// get Web Noticefile and store as external one using system(curl) function
-	sprintf(cmdline,"/usr/bin/curl -k -n sftp://%s:%s/%s/%s -o %s/ext%s",
+	sprintf(cmdline,"/usr/local/bin/curl-new -k -n sftp://%s:%s/%s/%s -o %s/ext%s",
 			cfgini->exp_ftpurl, cfgini->exp_ftpport, cfgini->exp_ftppath, cfgini->web_noticefile, 
 			cfgini->web_root, cfgini->web_noticefile );
 #ifdef BHSIM
@@ -915,7 +915,7 @@ int		modeoct;
 	addwebnotice(series, notice, data);
 	
 	// overwrite web notice file remote by local reference file using system(curl) function
-	sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", 
+	sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T %s/%s sftp://%s:%s/%s/%s", 
 			cfgini->web_root, cfgini->web_noticefile, 
 			cfgini->exp_ftpurl, cfgini->exp_ftpport, cfgini->exp_ftppath, cfgini->web_noticefile );
 	BHLOG(LOGXFER) printf("     GetNotice: reset web-notice file: %s\n", cmdline);
