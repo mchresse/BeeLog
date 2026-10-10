@@ -58,7 +58,9 @@
 #include "beehive.h"
 #include "beelog.h"
 
-long	samples[MAX_N_SAMPLES];	// global field of measured data per loop
+long    samples[MAX_N_SAMPLES];	// global field of measured data per loop
+long    offset;
+volatile int reset_tara = 0;
  
 /*******************************************************************************
 * Function: inithx711()

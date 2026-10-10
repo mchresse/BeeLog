@@ -31,10 +31,10 @@ extern "C" {
 #define LOGHX2		0b00001000	// 8:   HX711 init & get values
 #define LOGXFER		0b00010000	// 16:  Import/export in all formats and protocols
 #define WEBUPD		0b00100000	// 32:  all about web page creation & data update
-#define LOGMON		0b01000000  // 64:  Raspberry monitoring routines & ADS
+#define LOGMON		0b01000000      // 64:  Raspberry monitoring routines & ADS
 #define LOGDAT		0b10000000	// 128: statistic data calc. & validation
 
-unsigned char		lflags;			// log flag field
+extern unsigned char	lflags;		// log flag field
 #define	BHLOG(m)	if(lflags & m)	// macro for Log evaluation
 
 // Action on IO failure (e.g. file open failure, No OW sensors, No weightcell)
@@ -166,16 +166,16 @@ void bubble_sort(long list[], int n);
 /******************************************************************************
  * global data fields
  ******************************************************************************/
-dataset		bhdb;					// Database of measured values
-alarmfield	alarms;
-wdataset	webweather[MAXWDAYS];
-char		csv_notice[1024];		// free notice field for *.csv file
-int			curlcount;				// count curllib ftp xfer calls for debugging reasons
+extern dataset      bhdb;			// Database of measured values
+extern alarmfield   alarms;
+extern wdataset     webweather[MAXWDAYS];
+extern char         csv_notice[1024];		// free notice field for *.csv file
+extern int          curlcount;			// count curllib ftp xfer calls for debugging reasons
 
 // The one and only global init parameter set buffer parsed from config.ini file
-configuration * cfgini;				// ptr. to struct with initial parameters
+extern configuration * cfgini;			// ptr. to struct with initial parameters
 
-struct timeval	MyTime;				// contains time snap in seconds-usecs to epoche time
+extern struct timeval	MyTime;			// contains time snap in seconds-usecs to epoche time
 
 #ifdef __cplusplus
 }

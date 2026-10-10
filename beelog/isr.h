@@ -20,10 +20,9 @@
 extern "C" {
 #endif
 
-volatile int reset_tara;			// the ISR event counter
-int			init_tara_button(void);	// initializes and activates ISR routine
+extern volatile int reset_tara;			// the ISR event counter
+int		init_tara_button(void);	// initializes and activates ISR routine
 void		myTaraISR(void);		// The ISR routine itself
-
 
 #ifdef __cplusplus
 }

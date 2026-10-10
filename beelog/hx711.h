@@ -50,12 +50,12 @@
 #include "getini.h"
 
 
-#define TESTLED_ON		0		// set TESTLEDPIN =0 -> LED ON
-#define TESTLED_OFF		1		// set TESTLEDPIN =1 -> LED OFF
+#define TESTLED_ON	0		// set TESTLEDPIN =0 -> LED ON
+#define TESTLED_OFF	1		// set TESTLEDPIN =1 -> LED OFF
 
 // Weight scale metrics
 #define MAX_N_SAMPLES   100		// number of max. weight scale measures
-#define	CALTEMP			21.00	// calibration temperature
+#define	CALTEMP		21.00	// calibration temperature
 
 // HX711 Pin control macros
 #define SCK_ON  digitalWrite(cfgini->hc_hxclkpin,1)	// set HX711 module SCK pin = 1
@@ -63,18 +63,18 @@
 #define DT_R    digitalRead(cfgini->hc_hxdatapin)	// read HX711 module DT pin
 
  
-  long	offset;					// store adapted offset
+extern long	offset;					// store adapted offset
 
 // functions in hx711.c
-int				inithx711	(int hxidx, int channel);
-float			gethx711	(long offset, float TempExt, int hxidx, int channel);
-float			gettcomp	(float exttemp);
-long			getaverage	(int nsamples);
-void			setHighPri	(void);
-void			setup_gpio	();
-void			unpull_pins	();
-void			reset_converter(void);
-void			set_HX711gain(int r);
+int		inithx711	(int hxidx, int channel);
+float		gethx711	(long offset, float TempExt, int hxidx, int channel);
+float		gettcomp	(float exttemp);
+long		getaverage	(int nsamples);
+void		setHighPri	(void);
+void		setup_gpio	();
+void		unpull_pins	();
+void		reset_converter(void);
+void		set_HX711gain(int r);
 unsigned long	read_cnt	(int channel);
 
 #endif /* HX711_H */

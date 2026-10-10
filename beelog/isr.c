@@ -23,8 +23,7 @@
 #include "beelog.h"
 
 
-// the ISR event counter 
-// volatile int reset_tara = 0; // defined in hx711.c
+// the ISR event counter reset_tara defined in hx711.c
 
 // -------------------------------------------------------------------------
 // myInterrupt:  called every time an event occurs

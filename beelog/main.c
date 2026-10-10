@@ -88,11 +88,11 @@
  * global data fields
  ******************************************************************************/
 dataset		bhdb;					// Database of measured values
-unsigned char		lflags;			// log flag field
+unsigned char	lflags;			// log flag field
 alarmfield	alarms;
 wdataset	webweather[MAXWDAYS];
 char		csv_notice[1024];		// free notice field for *.csv file
-int			curlcount;				// count curllib ftp xfer calls for debugging reasons
+int		curlcount;				// count curllib ftp xfer calls for debugging reasons
 
 // The one and only global init parameter set buffer parsed from config.ini file
 configuration * cfgini;				// ptr. to struct with initial parameters
