@@ -72,7 +72,7 @@ int ftpput(CURL *curl, char* url, char* srcpath, char* srcname, char* dstpath, c
   char pbuf[1024];
   
 	sprintf(sbuf,    "%s/%s", srcpath, srcname);				// full source path + name
-	sprintf(dbuf,    "sftp://%s:%s/%s/%s", url, ftpport, dstpath, dstname);	// full dest.-path+name
+	sprintf(dbuf,    "ftp://%s:%s/%s/%s", url, ftpport, dstpath, dstname);	// full dest.-path+name
 	if(*proxy != '\0'){
 		sprintf(pbuf,    "socks5://%s:%s", proxy, proxyport);					// full SOCKS5 proxy server
 	}
@@ -199,7 +199,7 @@ int ftpget(char* url, char* srcpath, char* srcname, char* dstpath, char* dstname
   char dbuf[1024];
   char pbuf[1024];
   
-	sprintf(sbuf,    "sftp://%s:%s/%s/%s", url, ftpport, srcpath, srcname);	// full FTP source path + name
+	sprintf(sbuf,    "ftp://%s:%s/%s/%s", url, ftpport, srcpath, srcname);	// full FTP source path + name
 	sprintf(dbuf,    "%s/%s", dstpath, dstname);				// local full dest.-path + name
 	ftpfile.filename= dbuf;
 	ftpfile.stream	= NULL;

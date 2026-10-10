@@ -63,7 +63,7 @@
 #define DT_R    digitalRead(cfgini->hc_hxdatapin)	// read HX711 module DT pin
 
  
-  extern long	offset;					// store adapted offset
+  long	offset;					// store adapted offset
 
 // functions in hx711.c
 int				inithx711	(int hxidx, int channel);

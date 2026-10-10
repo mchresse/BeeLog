@@ -751,21 +751,21 @@ CURL *curlhandle = NULL;
 		}else if(expformat == EXPFORM_SYSTEM){	
 		// start FTP transfer using cmdline call of curllib by system() function
 #ifndef BHSIM
-			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf, url, cfgini->exp_ftpport, path, sbuf );
+			sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf, url, cfgini->exp_ftpport, path, sbuf );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf2, url, cfgini->exp_ftpport, path, sbuf2 );
+			sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, sbuf2, url, cfgini->exp_ftpport, path, sbuf2 );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, logfile, url, cfgini->exp_ftpport, path, logfile );
+			sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, logfile, url, cfgini->exp_ftpport, path, logfile );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);
-			sprintf(cmdline,"/usr/bin/curl -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, cfgini->web_deffile, url, cfgini->exp_ftpport, path, cfgini->web_deffile );
+			sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T %s/%s sftp://%s:%s/%s/%s", cfgini->web_root, cfgini->web_deffile, url, cfgini->exp_ftpport, path, cfgini->web_deffile );
 			BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 			system(cmdline);			
 
 			BHLOG(LOGBH){
-				sprintf(cmdline,"/usr/bin/curl -k -n -T ./%s sftp://%s:%s/%s/%s", logfile2, url, cfgini->exp_ftpport, path, logfile2 );
+				sprintf(cmdline,"/usr/local/bin/curl-new -k -n -T ./%s sftp://%s:%s/%s/%s", logfile2, url, cfgini->exp_ftpport, path, logfile2 );
 				BHLOG(LOGXFER) printf("     Export: %s\n", cmdline);
 				system(cmdline);
 			}
